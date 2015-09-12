@@ -19,10 +19,10 @@ import java.io.IOException;
 public class JokeAsyncTask extends AsyncTask<Void, Void, String> {
     private JokeApi jokeApiService = null;
 
-    private Context context;
+    private OnJokeListener listener;
 
-    public JokeAsyncTask(Context context){
-        this.context = context;
+    public JokeAsyncTask(OnJokeListener listener){
+        this.listener = listener;
     }
 
     @Override
@@ -53,8 +53,6 @@ public class JokeAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Intent intent = new Intent(context, JokeActivity.class);
-        intent.putExtra(JokeActivity.EXTRA_JOKE, result);
-        context.startActivity(intent);
+        listener.onGetJoke(result);
     }
 }
